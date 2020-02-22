@@ -6,7 +6,7 @@ import java.nio.charset.StandardCharsets;
 
 public class SendMessage {
 
-    private final static String QUEUE_NAME = "device_command_triggered";
+    private final static String QUEUE_NAME = "device_command_triggered123";
 
     public static void main(String[] argv) throws Exception {
         ConnectionFactory factory = new ConnectionFactory();
@@ -18,7 +18,7 @@ public class SendMessage {
         try (Connection connection = factory.newConnection();
              Channel channel = connection.createChannel()) {
             channel.queueDeclare(QUEUE_NAME, false, false, false, null);
-            String message = "Hello World From Nayan!";
+            String message = "MessageID: Message Received";
             channel.basicPublish("", QUEUE_NAME, null, message.getBytes(StandardCharsets.UTF_8));
             System.out.println(" [x] Sent '" + message + "'");
         }
