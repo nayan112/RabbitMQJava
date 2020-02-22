@@ -2,12 +2,18 @@ package Listener;
 
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import com.rabbitmq.client.*;
 
-public class RPCListener implements IRPCListener {
+public class RPCListener<T, V> implements IRPCListener<T, V> {
 
     private ConnectionFactory _connection;
-
     public RPCListener() {
         super();
         _connection = new ConnectionFactory();
@@ -19,8 +25,7 @@ public class RPCListener implements IRPCListener {
     }
 
     @Override
-    public void Listen(String queueName, IMessageListener messageListener)
-            throws IOException, TimeoutException {
+    public void Listen(String queueName, IMessageListener<T,V> messageListener) throws IOException, TimeoutException {
         try (Connection connection = _connection.newConnection(); Channel channel = connection.createChannel()) {
             channel.queueDeclare(queueName, false, false, false, null);
             channel.basicQos(0, 1, false);
@@ -35,7 +40,10 @@ public class RPCListener implements IRPCListener {
 
                 try {
                     System.out.println(" [.] Received Message " + body + ")");
-                    response = messageListener.OnMessage(body);
+                    Gson gson = new Gson();
+                    //V req = gson.fromJson(body,V.class);
+                    T res = messageListener.OnMessage(body);
+                    response = gson.toJson(res);
                 } catch (RuntimeException e) {
                     System.out.println(" [.] " + e.toString());
                 } finally {

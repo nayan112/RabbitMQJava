@@ -1,5 +1,8 @@
 {
     "java.project.referencedLibraries": [
-        "lib/**/*.jar"
+        "lib/**/*.jar",
+        "c:\\Users\\nayan\\Downloads\\gson-2.3.1.jar",
+        "c:\\Users\\nayan\\Downloads\\jackson-core-2.10.2.jar",
+        "c:\\Users\\nayan\\Downloads\\com.fasterxml.jackson.annotations.jar\\com.fasterxml.jackson.annotations.jar"
     ]
 }

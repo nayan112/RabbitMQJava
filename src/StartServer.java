@@ -12,7 +12,7 @@ public class StartServer {
         server.Listen("rpc_queue", messageHandler); */
 
         IRPCListener server = new RPCListener();
-        IMessageListener messageListener = new MessageListener();
+        IMessageListener<Response, Request> messageListener = new MQMessageListener();
         server.Listen("rpc_queue", messageListener); 
     }
 }
