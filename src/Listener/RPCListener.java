@@ -3,12 +3,7 @@ package Listener;
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import com.rabbitmq.client.*;
 
 public class RPCListener<T, V> implements IRPCListener<T, V> {
@@ -41,7 +36,6 @@ public class RPCListener<T, V> implements IRPCListener<T, V> {
                 try {
                     System.out.println(" [.] Received Message " + body + ")");
                     Gson gson = new Gson();
-                    //V req = gson.fromJson(body,V.class);
                     T res = messageListener.OnMessage(body);
                     response = gson.toJson(res);
                 } catch (RuntimeException e) {

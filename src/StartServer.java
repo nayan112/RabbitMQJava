@@ -11,7 +11,7 @@ public class StartServer {
         IMessageEventHandler messageHandler = new MessageHandler();
         server.Listen("rpc_queue", messageHandler); */
 
-        IRPCListener server = new RPCListener();
+        IRPCListener<Response, Request> server = new RPCListener();
         IMessageListener<Response, Request> messageListener = new MQMessageListener();
         server.Listen("rpc_queue", messageListener); 
     }

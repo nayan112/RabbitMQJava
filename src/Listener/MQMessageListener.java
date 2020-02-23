@@ -6,11 +6,6 @@ import com.google.gson.GsonBuilder;
 
 public class MQMessageListener implements IMessageListener<Response,Request> {
     @Override
-    public Response OnMessage(Object message) {
-        return new Response(LocalDateTime.now());
-    }
-
-    @Override
     public Response OnMessage(String message) {
         GsonBuilder builder = new GsonBuilder();
         builder.serializeNulls();
